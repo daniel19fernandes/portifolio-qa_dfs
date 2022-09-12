@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo.css">
+    <title>Portfólio | DFS</title>
+
+</head>
+
+<body>
+    <div class="content">
+        <h1><b>Registro de Formulário</b></h1>
+        <h1 class="subtitulo">(PORTFÓLIO - DANIEL FERNANDES)</h1>
+        <form id="form">
+            <div>
+                <input type="text" placeholder="Nome completo" class="inputs required" oninput="nameValidate()">
+                <span class="span-required">o nome deve ter no mínimo 3 letras</span>
+            </div>
+            <div>
+                <input type="email" placeholder="E-mail" class="inputs required" oninput="emailValidate()">
+                <span class="span-required">digite um e-mail válido</span>
+            </div>
+            <div>
+                <input type="password" placeholder="Senha" class="inputs required" oninput="mainPasswordValidate()">
+                <span class="span-required">digite uma senha com no mínimo 8 caracteres</span>
+            </div>
+            <div>
+                <input type="password" placeholder="Repita sua senha" class="inputs required" oninput="comparePassword()">
+                <span class="span-required">as senhas devem ser iguais</span>
+            </div>
+            <p><b>Experiência em QA?</b></p>
+            <div class="box-select">
+                <div>
+                    <input type="radio" id="s" value="s" name="experiencia">
+                    <label for="s">Sim</label>
+                </div>
+                <div>
+                    <input type="radio" id="n" value="n" name="experiencia">
+                    <label for="n">Não</label>
+                </div>
+            </div>
+            <p><b>Habilidades:</b></p>
+            <div class="box-select">
+                <div>
+                    <input type="checkbox" id="automacao" value="automacao" name="habilidades">
+                    <label for="automacao">Automação de Testes</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="api" value="api" name="habilidades">
+                    <label for="api">Testes via API</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="linguagem" value="linguagem" name="habilidades">
+                    <label for="linguagem">Linguagens de Programação</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="scrum" value="scrum" name="habilidades">
+                    <label for="scrum">Método Ágil</label>
+                </div>
+            </div>
+
+            <button type="submit"><b>ENVIAR</b></button>
+
+        </form>
+    </div>
+    
+</body>
+
+<script>
+    const form = document.getElementById('form');
+    const campos = document.querySelectorAll('.required');
+    const spans = document.querySelectorAll('.span-required');
+    const emailRegex = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+    
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        isNameValid = nameValidate();
+        isEmailValid = emailValidate();
+        isPasswordValid = mainPasswordValidate();
+        isComparePwvalid = comparePassword();
+        if (isNameValid && isEmailValid && isPasswordValid && isComparePwvalid){
+            location.href="pagina_registro_sucesso.html";
+        }      
+    });
+
+    function setError(index){
+        campos[index].style.border = '2px solid #e63636';
+        spans[index].style.display = 'block'; 
+    }
+
+    function removeError(index){
+        campos[index].style.border = '';
+        spans[index].style.display = 'none';
+    }
+   
+    function nameValidate(){
+        console.log(campos[0].value)
+        if(campos[0].value.length < 3)
+        {
+            setError(0);
+            return false;
+        }   
+        else
+        {
+            removeError(0);
+            return true;
+        }
+    }
+
+    function emailValidate(){
+        if(!emailRegex.test(campos[1].value))
+        {
+            setError(1);
+            return false;
+        }        
+        else
+        {    
+            removeError(1);
+            return true;
+        }
+    }
+
+    function mainPasswordValidate(){
+        if(campos[2].value.length < 8)
+        {
+            setError(2);
+            return false;
+        }        
+        else
+        {    
+            removeError(2);
+            comparePassword();
+            return true;
+        }
+    }
+    
+    function comparePassword(){
+        if(campos[2].value == campos[3].value && campos[3].value.length >= 8) 
+        {
+            removeError(3);
+            return true;
+        }
+        else
+        {
+            setError(3);   
+            return false; 
+        }
+    }
+
+</script>
+</html>
+
+
